@@ -4,6 +4,16 @@
 
 ---
 
+## Watch the Demo
+
+![DevSecOps Security Gate demo cover](demo/exports/slides/slide-01.png)
+
+[Watch the 42-second video](demo/exports/devsecops-security-gate-demo.mp4) · [Download the nine-slide carousel PDF](demo/exports/devsecops-security-gate-carousel.pdf) · [Get the social posting kit](demo/README.md)
+
+The video is silent with readable captions. The posting kit includes ordered images, LinkedIn and Facebook captions, and an optional voiceover script. The demo shows a local API and real GitHub workflow evidence.
+
+---
+
 ## Project Overview
 
 This project demonstrates a lightweight, automated DevSecOps security gate for a small Python web API. The goal is to show how modern security controls can be embedded directly into a GitHub-based development workflow without requiring local infrastructure, virtual machines, or heavy databases.
@@ -259,6 +269,15 @@ day-01-devsecops-security-gate/
 ├── requirements.in
 ├── requirements.txt
 ├── pytest.ini
+├── demo/
+│   ├── README.md
+│   ├── build_demo.py
+│   ├── slide-copy.md
+│   ├── social-copy.md
+│   └── exports/
+│       ├── devsecops-security-gate-carousel.pdf
+│       ├── devsecops-security-gate-demo.mp4
+│       └── slides/
 ├── app/
 │   ├── __init__.py
 │   └── main.py

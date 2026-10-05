@@ -140,6 +140,8 @@ day-01-devsecops-security-gate/
 | `docs/lessons-learned.md` | Local and GitHub-hosted findings and remediation |
 | `sbom/README.md` | Explains SBOM generation, artifact download, and non-commit policy |
 | `evidence/*/README.md` | Links and summaries for the passing GitHub runs |
+| `demo/README.md` | Shareable carousel, video, images, and social posting instructions |
+| `demo/build_demo.py` | Rebuilds the demo PDF, PNG slides, and MP4 from reviewed content |
 
 ### Diagrams
 
