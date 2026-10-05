@@ -1,20 +1,5 @@
-# Evidence - CodeQL
+# CodeQL Evidence
 
-This directory contains CodeQL analysis evidence.
+The [CodeQL run for commit `1595b8f`](https://github.com/TRahman2414/day-01-devsecops-security-gate/actions/runs/37296218467) passed on 5 October 2026. GitHub accepted the analysis upload. A check of the repository code scanning API found **zero open alerts** at validation time.
 
-Expected contents:
-
-- CodeQL workflow run summary
-- GitHub Security tab alerts view (if any)
-- No alerts / all clear screenshot
-
-## Naming Convention
-
-Use descriptive filenames such as:
-
-- `codeql-run-summary-YYYYMMDD.png`
-- `codeql-no-alerts-YYYYMMDD.png`
-
-## Privacy Check
-
-Ensure screenshots do not contain sensitive code or internal identifiers.
+The repository ruleset requires CodeQL results and blocks medium-or-higher security alerts and warning-or-higher quality alerts on pull requests.

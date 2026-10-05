@@ -1,25 +1,14 @@
-# Evidence - GitHub Actions
+# GitHub Actions Evidence
 
-This directory contains screenshots and exports from the GitHub Actions tab.
+Validated on 5 October 2026 against commit `1595b8f` on `main`.
 
-Expected contents:
+| Workflow | Result |
+|---|---|
+| [CI](https://github.com/TRahman2414/day-01-devsecops-security-gate/actions/runs/37296218427) | Passed: seven tests, dependency check, CycloneDX SBOM generation and artifact upload |
+| [Gitleaks](https://github.com/TRahman2414/day-01-devsecops-security-gate/actions/runs/37296218423) | Passed |
+| [CodeQL](https://github.com/TRahman2414/day-01-devsecops-security-gate/actions/runs/37296218467) | Passed |
+| [Trivy](https://github.com/TRahman2414/day-01-devsecops-security-gate/actions/runs/37296218261) | Passed |
 
-- Workflow run summary screenshots
-- Successful job matrix view
-- SBOM artifact download evidence
+The CI run uploaded artifact `sbom-cdx-json` (artifact ID `11337919493`). It was downloaded and checked: CycloneDX 1.6 JSON, 29 components in the GitHub runner environment, including `httpx2`.
 
-## Naming Convention
-
-Use descriptive filenames such as:
-
-- `ci-run-summary-YYYYMMDD.png`
-- `all-checks-passed-YYYYMMDD.png`
-- `sbom-artifact-YYYYMMDD.png`
-
-## Privacy Check
-
-Ensure screenshots do not contain:
-
-- Real secrets or tokens
-- Internal repository names you do not want to share
-- Personal email addresses
+The first CI run failed because plain `pytest` could not import `app`. Commit `1595b8f` added `pytest.ini`; the next run passed. The failure is retained in [run 37296005486](https://github.com/TRahman2414/day-01-devsecops-security-gate/actions/runs/37296005486) as remediation evidence.

@@ -1,6 +1,6 @@
 # Day 01 — Automated DevSecOps Security Gate
 
-> **Status:** Local tests, dependency audit, secret scan, Trivy scan, SBOM generation, and workflow linting have been checked. GitHub Actions runs and screenshots are **PENDING** until this repository is pushed to GitHub.
+> **Status:** Published on GitHub. The CI, Gitleaks, CodeQL, and Trivy workflows passed on `main` on 5 October 2026; the CycloneDX SBOM artifact was downloaded and checked.
 
 ---
 
@@ -176,7 +176,7 @@ pytest
 
 ### 5. GitHub Actions
 
-The public repository is [TRahman2414/day-01-devsecops-security-gate](https://github.com/TRahman2414/day-01-devsecops-security-gate). The workflows run on pushes and pull requests targeting `main`. Configure branch protection after the first run so GitHub can list the actual check names. Add a code-scanning ruleset that requires CodeQL results and sets the alert threshold; a passing CodeQL job alone does not mean it found no alerts.
+The public repository is [TRahman2414/day-01-devsecops-security-gate](https://github.com/TRahman2414/day-01-devsecops-security-gate). The workflows run on pushes and pull requests targeting `main`. A repository ruleset requires pull requests, passing CI/Gitleaks/CodeQL/Trivy checks, and CodeQL results below its alert threshold before merging. This GitHub setting is separate from the committed workflow files.
 
 ---
 
@@ -195,17 +195,17 @@ See [`security/threat-model.md`](security/threat-model.md) for the full threat m
 
 ## Evidence / Results
 
-Evidence of successful pipeline execution will be captured after the repository is pushed to GitHub and workflows run.
+The first successful GitHub-hosted runs are recorded below. Each evidence page links to the original run.
 
 | Evidence Type         | Location                                    | Status   |
 |-----------------------|---------------------------------------------|----------|
-| Actions summary       | [`evidence/actions/`](evidence/actions/)    | PENDING  |
-| CodeQL results        | [`evidence/codeql/`](evidence/codeql/)      | PENDING  |
-| Gitleaks results      | [`evidence/gitleaks/`](evidence/gitleaks/)  | PENDING  |
-| Trivy results         | [`evidence/trivy/`](evidence/trivy/)        | PENDING  |
+| Actions summary       | [`evidence/actions/`](evidence/actions/)    | VERIFIED |
+| CodeQL results        | [`evidence/codeql/`](evidence/codeql/)      | VERIFIED |
+| Gitleaks results      | [`evidence/gitleaks/`](evidence/gitleaks/)  | VERIFIED |
+| Trivy results         | [`evidence/trivy/`](evidence/trivy/)        | VERIFIED |
 | Local pre-push checks | [`evidence/local-validation.md`](evidence/local-validation.md) | COMPLETE |
 
-**PENDING:** Screenshots and result summaries will be added after CI runs.
+The initial CI run failed during test collection; a `pytest.ini` fix made plain `pytest` import the local package. The next run passed. Both runs are linked in the Actions evidence.
 
 ---
 
@@ -215,7 +215,7 @@ The local pre-push review found that the original `pytest<9` constraint selected
 
 The Trivy gate now fails on MEDIUM or higher findings. A temporary lock containing pytest 8.4.2 triggered the expected failure during local validation.
 
-The original Trivy workflow scanned version ranges rather than the resolved dependency tree. It now scans the committed lock, including transitive packages. Local Trivy and Gitleaks scans passed; see [`evidence/local-validation.md`](evidence/local-validation.md). GitHub Actions findings remain pending the first push.
+The original Trivy workflow scanned version ranges rather than the resolved dependency tree. It now scans the committed lock, including transitive packages. Local Trivy and Gitleaks scans passed; see [`evidence/local-validation.md`](evidence/local-validation.md). All four GitHub Actions workflows passed after the import fix.
 
 ---
 
@@ -233,7 +233,7 @@ When a security gate fails:
 
 ## Lessons Learned
 
-Local pre-push lessons are recorded. GitHub-hosted results remain pending.
+Local pre-push lessons and the first GitHub-hosted CI failure are recorded.
 
 A dedicated lessons-learned document is available at [`docs/lessons-learned.md`](docs/lessons-learned.md).
 
@@ -243,7 +243,6 @@ A dedicated lessons-learned document is available at [`docs/lessons-learned.md`]
 
 - Add OpenSSF Scorecard scanning.
 - Add a dedicated deployment security gate if the API is ever deployed.
-- Add branch protection rules requiring passing checks before merge.
 - Expand test coverage and add integration tests.
 - Evaluate additional SAST tools for broader coverage.
 

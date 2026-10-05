@@ -12,9 +12,9 @@
 | **Goal** | Demonstrate automated software security controls using GitHub Actions |
 | **Host OS** | Bazzite Linux |
 | **Local Path** | `/run/media/tanjidurrahman2414/Game Files/Cybersecurity/Projects/day-01-devsecops-security-gate/` |
-| **Target Platform** | Public GitHub repository |
+| **Repository** | [TRahman2414/day-01-devsecops-security-gate](https://github.com/TRahman2414/day-01-devsecops-security-gate) |
 | **Compute Model** | GitHub-hosted runners (no local VMs, containers, CI servers, or databases required) |
-| **Current Status** | Locally validated; GitHub Actions has not run yet |
+| **Current Status** | Published; CI, Gitleaks, CodeQL, and Trivy passed on `main` on 5 October 2026 |
 
 ---
 
@@ -128,7 +128,7 @@ day-01-devsecops-security-gate/
 
 | File | Purpose |
 |------|---------|
-| `security/SECURITY-GATES.md` | Defines each security gate, fail conditions, and branch protection recommendations |
+| `security/SECURITY-GATES.md` | Defines each security gate, fail conditions, and repository rules |
 | `security/threat-model.md` | Identifies threats, impacts, mitigations, trust boundaries, and risk acceptance |
 
 ### Supporting Documentation
@@ -137,9 +137,9 @@ day-01-devsecops-security-gate/
 |------|---------|
 | `docs/architecture.md` | Full architecture description with Mermaid diagram |
 | `docs/remediation.md` | Step-by-step remediation workflow for each failed gate |
-| `docs/lessons-learned.md` | Placeholder for post-execution insights |
+| `docs/lessons-learned.md` | Local and GitHub-hosted findings and remediation |
 | `sbom/README.md` | Explains SBOM generation, artifact download, and non-commit policy |
-| `evidence/*/README.md` | Placeholder instructions for scan result screenshots |
+| `evidence/*/README.md` | Links and summaries for the passing GitHub runs |
 
 ### Diagrams
 
@@ -316,24 +316,11 @@ The same four workflows run against the PR branch. Results appear in:
 
 ---
 
-## 10. Manual GitHub Configuration Required
+## 10. GitHub Repository Configuration
 
-The following must be configured in the GitHub web UI; they are not part of the committed files:
+The public repository is published and the four workflows have run successfully. The `main` branch has a repository ruleset named **Require DevSecOps security gates**. It requires a pull request, up-to-date passing CI/Gitleaks/CodeQL/Trivy checks, resolved review threads, and CodeQL results below the configured alert threshold (no medium-or-higher security alerts or warning-or-higher quality alerts). Force pushes are blocked. Zero approving reviews are required so a solo maintainer can merge a passing pull request.
 
-1. **Create a public GitHub repository** and push this project.
-2. **Enable GitHub Actions** under Settings → Actions → General.
-3. **Allow code scanning** for the public repository. The committed `codeql.yml` is an advanced setup; do not enable a second default CodeQL setup for the same code.
-4. **Enable the dependency graph** (usually on by default for public repos).
-5. **Configure branch protection for `main`:**
-   - Check "Require a pull request before merging"
-   - Check "Require status checks to pass before merging"
-   - Add these status checks:
-     - `CI / Run Tests and Generate SBOM`
-     - `CodeQL / Analyze Python`
-     - `Gitleaks / Secret Scan`
-     - `Trivy / Filesystem and Dependency Scan`
-   - Add a ruleset with **Require code scanning results**, select CodeQL, and set the alert threshold. Requiring the workflow job alone does not block on findings.
-6. **Optionally enable Dependabot alerts** for continuous dependency monitoring.
+The ruleset is a GitHub repository setting rather than a committed file. The CodeQL workflow is an advanced setup; enabling a second default CodeQL setup for the same code is unnecessary. Dependabot is configured to propose dependency and action updates weekly.
 
 ---
 
@@ -382,7 +369,7 @@ The following must be configured in the GitHub web UI; they are not part of the 
 | Tests on Python 3.11, 3.12, and 3.14 | ✅ 7 passed on each version |
 | Dependency integrity (`pip check`) | ✅ Pass locally |
 | Dependency audit (`pip-audit`) | ✅ No known vulnerabilities at review time |
-| Trivy filesystem scan | ✅ 29 pinned Python packages detected; no vulnerabilities at review time |
+| Trivy filesystem scan | ✅ Committed dependency lock scanned; no vulnerabilities at review time |
 | Gitleaks directory scan | ✅ No leaks found locally |
 | CycloneDX SBOM validation | ✅ Pass locally |
 | Directory structure matches request | ✅ Pass |
@@ -395,11 +382,13 @@ The following must be configured in the GitHub web UI; they are not part of the 
 
 The initial local audit found pytest 8.4.2 affected by PYSEC-2026-1845. The test constraint was raised to pytest 9.0.3 or later; the committed lock selects 9.1.1. The follow-up audit found no known vulnerabilities.
 
+On GitHub, the first CI run failed because plain `pytest` did not include the repository root on its import path. Commit `1595b8f` added `pytest.ini`, and the next run passed all seven tests. The [Actions evidence](evidence/actions/) links both runs, all four passing workflows, and the downloadable CycloneDX 1.6 SBOM artifact. The repository code scanning API showed zero open alerts at validation time.
+
 ---
 
 ## 13. Risks and Limitations
 
-- **CI has not executed yet:** workflows are validated locally but have not run on GitHub. GitHub results and screenshots are pending; local lessons are recorded.
+- **No deployed service:** this project validates a security pipeline and runs the API locally; it is not a public production API.
 - **Gitleaks action licensing:** organization-owned repositories require a Gitleaks license.
 - **Dependency vulnerabilities:** the pinned lock passed a local advisory audit on 5 October 2026; new advisories can appear later.
 - **In-memory storage:** not suitable for production use.
@@ -408,21 +397,18 @@ The initial local audit found pytest 8.4.2 affected by PYSEC-2026-1845. The test
 
 ---
 
-## 14. Manual Steps to Complete the Project
+## 14. Continuing Development
 
-1. Push the project to a new public GitHub repository.
-2. Enable GitHub Actions, CodeQL, and branch protection as described in Section 10.
-3. Create a pull request with a small change to trigger the workflows.
-4. Verify all four workflows pass.
-5. Download the SBOM artifact from the CI workflow.
-6. Capture screenshots of passing workflow runs and store them in `evidence/`.
-7. Replace the GitHub-run **PENDING** sections in `README.md` and this report, and add GitHub-run lessons to `docs/lessons-learned.md`.
-8. Add any findings and remediation notes to the documentation.
+1. Create a feature branch for a code or dependency change.
+2. Open a pull request to `main`.
+3. Review all four required checks and any CodeQL code scanning findings.
+4. Merge after the repository ruleset permits it.
+5. Review Dependabot pull requests separately before merging action or dependency updates.
 
 ---
 
 ## 15. Conclusion
 
-The Day 01 DevSecOps Security Gate project is prepared as a lightweight public portfolio repository. The local API, workflow syntax, dependency lock, scans, and SBOM have been checked. GitHub-hosted pipeline results remain unverified until the initial push and workflow run.
+The Day 01 DevSecOps Security Gate project is a public portfolio repository. The local API, workflow syntax, dependency lock, scans, and SBOM have been checked. The first GitHub-hosted run exposed a pytest import issue, which was fixed; the next run passed all four workflows.
 
-**Project status:** Ready to push to GitHub and execute CI. Scan results and evidence are pending the first workflow run.
+**Project status:** Published and passing on `main`. Workflow and SBOM evidence is linked in `evidence/`.

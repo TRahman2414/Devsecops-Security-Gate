@@ -2,7 +2,7 @@
 
 Date: 5 October 2026 (Singapore time)
 
-These checks ran against the local project before its first GitHub push. They are separate from the pending GitHub Actions evidence.
+These checks ran against the local project before its first GitHub push. The later GitHub-hosted results are linked in [`evidence/actions/`](actions/).
 
 | Check | Result |
 |---|---|
@@ -17,4 +17,4 @@ These checks ran against the local project before its first GitHub push. They ar
 
 The initial audit found [PYSEC-2026-1845](https://github.com/pypa/advisory-database/blob/main/vulns/pytest/PYSEC-2026-1845.yaml) in pytest 8.4.2. `requirements.in` now requires pytest 9.0.3 or newer, and `requirements.txt` pins pytest 9.1.1.
 
-GitHub-hosted CodeQL, Gitleaks, Trivy, and artifact upload results still need to be confirmed after the first push.
+GitHub-hosted CodeQL, Gitleaks, Trivy, tests, and SBOM artifact upload were confirmed after the first push; see [`evidence/actions/`](actions/).

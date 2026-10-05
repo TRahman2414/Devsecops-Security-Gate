@@ -54,19 +54,16 @@ This document defines the automated security gates that protect the `main` branc
 5. Push the fix to the same branch.
 6. Wait for all workflows to re-run and pass.
 
-## Branch Protection Recommendation
+## Repository Ruleset
 
-After confirming the workflows run correctly, enable the following branch protection rules for `main`:
+The `main` branch has a GitHub repository ruleset named **Require DevSecOps security gates**. It requires a pull request and these four passing checks:
 
-- Require a pull request before merging.
-- Require status checks to pass before merging:
-  - `CI / Run Tests and Generate SBOM`
-  - `CodeQL / Analyze Python`
-  - `Gitleaks / Secret Scan`
-  - `Trivy / Filesystem and Dependency Scan`
-- Add **Require code scanning results** with CodeQL and the desired alert threshold. Requiring the CodeQL workflow status alone only ensures that analysis ran successfully.
+- `Run Tests and Generate SBOM`
+- `Analyze Python`
+- `Secret Scan`
+- `Filesystem and Dependency Scan`
 
-These settings are configured manually in the GitHub repository settings and are not part of the committed files.
+The ruleset requires up-to-date checks, resolved review threads, and CodeQL results. Medium-or-higher security alerts and warning-or-higher quality alerts block merging. It blocks force pushes and requires zero approving reviews so a solo maintainer can merge a passing pull request. The ruleset is a GitHub setting, not a committed file.
 
 ## Exceptions
 

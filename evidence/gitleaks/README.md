@@ -1,19 +1,3 @@
-# Evidence - Gitleaks
+# Gitleaks Evidence
 
-This directory contains Gitleaks secret scanning evidence.
-
-Expected contents:
-
-- Gitleaks workflow run summary
-- Clean scan / no leaks screenshot
-
-## Naming Convention
-
-Use descriptive filenames such as:
-
-- `gitleaks-run-summary-YYYYMMDD.png`
-- `gitleaks-no-secrets-YYYYMMDD.png`
-
-## Privacy Check
-
-Ensure screenshots do not contain any actual secret material, even if redacted.
+The [Gitleaks run for commit `1595b8f`](https://github.com/TRahman2414/day-01-devsecops-security-gate/actions/runs/37296218423) passed on 5 October 2026. The secret scanning job reported no detected leaks.

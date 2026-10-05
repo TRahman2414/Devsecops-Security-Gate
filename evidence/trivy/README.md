@@ -1,20 +1,3 @@
-# Evidence - Trivy
+# Trivy Evidence
 
-This directory contains Trivy dependency and filesystem scanning evidence.
-
-Expected contents:
-
-- Trivy workflow run summary
-- SARIF upload confirmation in the Security tab
-- No HIGH/CRITICAL findings screenshot
-
-## Naming Convention
-
-Use descriptive filenames such as:
-
-- `trivy-run-summary-YYYYMMDD.png`
-- `trivy-no-critical-findings-YYYYMMDD.png`
-
-## Privacy Check
-
-Ensure screenshots do not contain internal repository names or sensitive dependency information.
+The [Trivy run for commit `1595b8f`](https://github.com/TRahman2414/day-01-devsecops-security-gate/actions/runs/37296218261) passed on 5 October 2026. The workflow uploaded SARIF to GitHub code scanning and the MEDIUM/HIGH/CRITICAL vulnerability gate passed. The repository code scanning API showed zero open alerts at validation time.
