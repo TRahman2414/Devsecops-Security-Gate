@@ -16,11 +16,11 @@ Code, setup steps and evidence: https://github.com/TRahman2414/day-01-devsecops-
 
 ## LinkedIn image post
 
-I built a small FastAPI project to show what happens when security checks are required before a pull request can merge.
+I built a small FastAPI notes API and put a security gate in front of `main`.
 
-The images walk through the API, the first failed CI run, the fix and the passing security checks. I fixed the import path, and all seven tests passed on the next run. I also updated a vulnerable pytest version found during the dependency audit.
+My first GitHub Actions run failed: `ModuleNotFoundError: No module named 'app'`. I added `pytest.ini`. The next run passed all seven tests. A dependency audit later caught pytest 8.4.2 (CVE-2025-71176), so I pinned 9.1.1 and reran the scans.
 
-Want to try the same workflow? Clone the repo, run the API and tests locally, then open the Actions tab to compare the failed and passing runs. CI, Gitleaks, CodeQL and Trivy are required checks, and CI uploads a CycloneDX SBOM you can inspect.
+The images show the API, the pipeline, the dependency fix and the SBOM. If you want to try it, clone the repo and run the API and tests. Then compare the failed and passing runs in GitHub Actions. I kept both runs public because the fix is easier to understand when you can see what broke. CI, Gitleaks, CodeQL and Trivy are required before a PR can merge. CI also uploads a CycloneDX SBOM to inspect.
 
 Setup, source code and run evidence: https://github.com/TRahman2414/day-01-devsecops-security-gate
 
