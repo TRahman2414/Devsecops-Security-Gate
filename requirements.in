@@ -1,0 +1,8 @@
+# Direct application dependencies
+fastapi>=0.110.0,<1.0.0
+uvicorn[standard]>=0.29.0,<1.0.0
+pydantic>=2.6.0,<3.0.0
+
+# Direct test dependencies
+pytest>=9.0.3,<10.0.0
+httpx2>=2.0.0,<3.0.0

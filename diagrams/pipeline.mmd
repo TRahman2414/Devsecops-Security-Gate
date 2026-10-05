@@ -1,0 +1,48 @@
+%% Mermaid pipeline diagram for the Day 01 DevSecOps Security Gate project
+%% Render with: https://mermaid.live/ or any Mermaid-compatible viewer
+
+graph LR
+    Developer["Developer Workstation"]
+    GitHub["GitHub Repository"]
+    Actions["GitHub Actions"]
+
+    subgraph SecurityPipeline["Security Pipeline"]
+        Tests["Unit Tests<br/>pytest"]
+        Gitleaks["Secret Scan<br/>Gitleaks"]
+        CodeQL["SAST<br/>CodeQL"]
+        Trivy["Dependency Scan<br/>Trivy"]
+        SBOM["SBOM Generation<br/>CycloneDX"]
+    end
+
+    Gate{"Security Gate"}
+    Approved["Approved / Mergeable"]
+    Blocked["Blocked / Remediation Required"]
+
+    Developer -->|git push / pull request| GitHub
+    GitHub --> Actions
+    Actions --> Tests
+    Actions --> Gitleaks
+    Actions --> CodeQL
+    Actions --> Trivy
+    Actions --> SBOM
+
+    Tests --> Gate
+    Gitleaks --> Gate
+    CodeQL --> Gate
+    Trivy --> Gate
+    SBOM --> Gate
+
+    Gate -->|All checks PASS| Approved
+    Gate -->|Any check FAILS| Blocked
+
+    style Developer fill:#e1f5fe
+    style GitHub fill:#f3e5f5
+    style Actions fill:#fff8e1
+    style Tests fill:#e8f5e9
+    style Gitleaks fill:#ffebee
+    style CodeQL fill:#e8f5e9
+    style Trivy fill:#fff3e0
+    style SBOM fill:#e3f2fd
+    style Gate fill:#fce4ec
+    style Approved fill:#c8e6c9
+    style Blocked fill:#ffcdd2

@@ -1,0 +1,74 @@
+# Day 01 DevSecOps Security Gate - Git Ignore
+# Exclude common local credential files, generated artifacts, and environments.
+# Gitignore cannot remove a secret already committed; Gitleaks scans for that.
+
+# Environment variables and secrets
+.env
+*.env
+.env.*
+.envrc
+secrets*
+*credentials*
+*password*
+*token*
+*api_key*
+*apikey*
+*.secrets
+
+# SSH and private keys
+*.pem
+*.key
+*.crt
+*.cer
+*.p12
+*.pfx
+*.der
+id_rsa
+id_rsa.pub
+id_ed25519
+id_ed25519.pub
+id_ecdsa
+id_ecdsa.pub
+*.ppk
+
+# Local Python environments
+.venv/
+venv/
+env/
+__pycache__/
+*.py[cod]
+*.egg-info/
+.pytest_cache/
+.mypy_cache/
+.ruff_cache/
+
+# Generated scan outputs and SBOM
+sbom/*.json
+sbom/*.xml
+*.cdx.json
+*.spdx.json
+*.sarif
+trivy-results.json
+gitleaks-report.json
+
+# Logs
+*.log
+logs/
+
+# Editor / IDE files
+.vscode/
+.idea/
+*.iml
+.DS_Store
+Thumbs.db
+desktop.ini
+
+# OS and temporary files
+*.swp
+*.swo
+*~
+tmp/
+temp/
+
+# DO NOT commit generated artifacts from CI.
+# The SBOM is produced in CI and stored as an artifact, not in the repository.
