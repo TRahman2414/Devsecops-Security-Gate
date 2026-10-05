@@ -259,6 +259,7 @@ day-01-devsecops-security-gate/
 ├── .gitignore
 ├── requirements.in
 ├── requirements.txt
+├── pytest.ini
 ├── app/
 │   ├── __init__.py
 │   └── main.py
