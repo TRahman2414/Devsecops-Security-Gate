@@ -14,11 +14,11 @@ Code, setup steps and evidence: https://github.com/TRahman2414/day-01-devsecops-
 
 #DevSecOps #AppSec #GitHubActions
 
-## LinkedIn screenshot and image post
+## LinkedIn image post
 
 I built a small FastAPI project to show what happens when security checks are required before a pull request can merge.
 
-The screenshots show the API responding to `/health` and the GitHub Actions results. The first CI run failed because pytest couldn't import the app. I fixed the import path, and all seven tests passed on the next run. I also updated a vulnerable pytest version found during the dependency audit.
+The images walk through the API, the first failed CI run, the fix and the passing security checks. I fixed the import path, and all seven tests passed on the next run. I also updated a vulnerable pytest version found during the dependency audit.
 
 Want to try the same workflow? Clone the repo, run the API and tests locally, then open the Actions tab to compare the failed and passing runs. CI, Gitleaks, CodeQL and Trivy are required checks, and CI uploads a CycloneDX SBOM you can inspect.
 
