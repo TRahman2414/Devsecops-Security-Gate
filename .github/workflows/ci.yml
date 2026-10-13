@@ -43,7 +43,7 @@ jobs:
           "$RUNNER_TEMP/sbom-tool/bin/cyclonedx-py" environment "$APP_PYTHON" --spec-version 1.6 --output-format JSON --validate -o sbom/sbom.cdx.json
 
       - name: Upload SBOM artifact
-        uses: actions/upload-artifact@b7c566a772e6b6bfb58ed0dc250532a479d7789f # v6
+        uses: actions/upload-artifact@cf430e030ddbb5b0abf93d22962f4752f3646cd9 # v7.0.2
         with:
           name: sbom-cdx-json
           path: sbom/sbom.cdx.json
